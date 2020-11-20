@@ -1,0 +1,45 @@
+{
+  "name": "icodestuff/ladocumenter",
+  "keywords": ["documentation", "larecipe", "openapi", "swagger", "apidoc", "api-documentation", "documenter", "laravel-api"],
+  "license": "MIT",
+  "description": "Generate API Documentation for your Laravel applications using annotations & LaRecipe.",
+  "minimum-stability": "dev",
+  "authors": [
+    {
+      "name": "Solomon Antoine",
+      "email": "antoinesolomon5@gmail.com"
+    }
+  ],
+  "require-dev": {
+    "nunomaduro/collision": "^4.2",
+    "nunomaduro/larastan": "^0.5.8",
+    "orchestra/testbench": "^5.2",
+    "phpunit/phpunit": "^8.5"
+  },
+  "require": {
+    "php": "^7.4",
+    "minime/annotations": "dev-master"
+  },
+  "prefer-stable": true,
+  "config": {
+    "preferred-install": "dist",
+    "sort-packages": true
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Icodestuff\\LaDocumenter\\LaDocumenterServiceProvider"
+      ]
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "Icodestuff\\LaDocumenter\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  }
+}

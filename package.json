@@ -1,0 +1,18 @@
+{
+  "private": true,
+  "dependencies": {
+    "cz-conventional-changelog": "^3.3.0",
+    "git-cz": "^4.7.4",
+    "husky": "^4.3.0"
+  },
+  "husky": {
+    "hooks": {
+      "prepare-commit-msg": "exec < /dev/tty && git cz --hook"
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "git-cz"
+    }
+  }
+}
