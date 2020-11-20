@@ -2,7 +2,7 @@
   "name": "icodestuff/ladocumenter",
   "keywords": ["documentation", "larecipe", "openapi", "swagger", "apidoc", "api-documentation", "documenter", "laravel-api"],
   "license": "MIT",
-  "description": "Generate API Documentation for your Laravel applications using annotations & LaRecipe.",
+  "description": "Automatically generate beautiful API documentation for your Laravel API routes using annotations.",
   "minimum-stability": "dev",
   "authors": [
     {
