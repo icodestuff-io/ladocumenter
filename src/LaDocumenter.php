@@ -5,6 +5,7 @@ namespace Icodestuff\LaDocumenter;
 use Icodestuff\LaDocumenter\Annotation\Endpoint;
 use Icodestuff\LaDocumenter\Annotation\Group;
 use Icodestuff\LaDocumenter\Annotation\LaDocumenterRoute;
+use Icodestuff\LaDocumenter\Enum\AnnotationType;
 use Icodestuff\LaDocumenter\Support\Extractor;
 use Illuminate\Routing\Route;
 use Illuminate\Routing\Router;
@@ -85,10 +86,10 @@ class LaDocumenter implements Contract
     public function getMethodDocBlock(LaDocumenterRoute $documenterRoute): LaDocumenterRoute
     {
         $annotations = $this->reader->getMethodAnnotations($documenterRoute->class, $documenterRoute->classMethod);
-        $endpointAnnotations = collect($annotations->get('endpoint'));
-        $responseAnnotations = collect($annotations->get('response'));
-        $bodyAnnotations = collect($annotations->get('body'));
-        $queryAnnotations = collect($annotations->get('query'));
+        $endpointAnnotations = collect($annotations->get(AnnotationType::ENDPOINT()));
+        $responseAnnotations = collect($annotations->get(AnnotationType::RESPONSE()));
+        $bodyAnnotations = collect($annotations->get(AnnotationType::BODY_PARAM()));
+        $queryAnnotations = collect($annotations->get(AnnotationType::QUERY_PARAM()));
 
         if ($endpointAnnotations->isNotEmpty()) {
             $endpointAnnotation = $endpointAnnotations->first();
@@ -133,7 +134,7 @@ class LaDocumenter implements Contract
      */
     public function getClassDocBlocks($class): Group
     {
-        $groupAnnotation = collect($this->reader->getClassAnnotations($class)->get('group'));
+        $groupAnnotation = collect($this->reader->getClassAnnotations($class)->get(AnnotationType::GROUP()));
 
         if ($groupAnnotation->isEmpty()) {
             $group = new Group();

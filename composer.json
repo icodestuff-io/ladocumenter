@@ -18,7 +18,8 @@
   },
   "require": {
     "php": "^7.4",
-    "minime/annotations": "dev-master"
+    "minime/annotations": "dev-master",
+    "myclabs/php-enum": "^1.7"
   },
   "prefer-stable": true,
   "config": {
