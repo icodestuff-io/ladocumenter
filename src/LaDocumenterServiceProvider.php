@@ -29,7 +29,7 @@ class LaDocumenterServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->publishes([__DIR__ . '../config/ladocumenter.php' => config_path('ladocumenter.php')], 'ladocumenter');
+        $this->publishes([__DIR__ . '/../config/ladocumenter.php' => config_path('ladocumenter.php')], 'ladocumenter');
 
         if ($this->app->runningInConsole()) {
             $this->commands([

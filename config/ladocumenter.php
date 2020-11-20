@@ -34,7 +34,7 @@ return [
     | Define the path to your controllers so we can properly namespace/group
     | their subsequent endpoints.
     */
-    'controller_path' => 'App\Http\Controllers\\',
+    'controller_path' => 'App\Http\Controllers',
 
     /*
     |--------------------------------------------------------------------------

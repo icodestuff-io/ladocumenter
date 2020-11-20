@@ -58,20 +58,22 @@ class GenerateDocumentationCommand extends Command
         $laDocumenterRoutes = $laDocumenterRoutes->map(function (LaDocumenterRoute $laDocumenterRoute){
             try {
                 $message = sprintf(
-                    '"\033[32m" "\u2713" Documented: %s::%s',
+                    '✅ Documented: %s::%s',
                     $laDocumenterRoute->class,
                     $laDocumenterRoute->classMethod
                 );
+                $laDocumenterRoute = $this->laDocumenter->getMethodDocBlock($laDocumenterRoute);
                 $this->info($message);
-                return $this->laDocumenter->getMethodDocBlock($laDocumenterRoute);
+                return $laDocumenterRoute;
             }catch (\Exception $exception) {
                 $message = sprintf(
-                    '"\033[0;31m" "\u2718" Skipped: %s::%s because %s',
+                    '❌ Skipped: %s::%s because %s',
                     $laDocumenterRoute->class,
                     $laDocumenterRoute->classMethod,
                     $exception->getMessage()
                 );
                 $this->info($message);
+                return false;
             }
         })->reject(function ($value) {
             return $value === false;

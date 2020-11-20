@@ -26,7 +26,7 @@ Then run
 #### Install LaDocumenter
 After installing LaRecipe you can now install LaDocumenter
 
-`composer require icodestuff-io/ladocumenter`
+`composer require icodestuff/ladocumenter`
 
 Then publish the config
 

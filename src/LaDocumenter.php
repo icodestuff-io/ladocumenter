@@ -6,6 +6,7 @@ use Icodestuff\LaDocumenter\Annotation\Endpoint;
 use Icodestuff\LaDocumenter\Annotation\Group;
 use Icodestuff\LaDocumenter\Annotation\LaDocumenterRoute;
 use Icodestuff\LaDocumenter\Enum\AnnotationType;
+use Icodestuff\LaDocumenter\Exceptions\LaDocumenterException;
 use Icodestuff\LaDocumenter\Support\Extractor;
 use Illuminate\Routing\Route;
 use Illuminate\Routing\Router;
@@ -49,7 +50,7 @@ class LaDocumenter implements Contract
             }
 
             // Remove if the route is not using the api middleware.
-            if (!in_array(config('documentation.routes'), $route->action['middleware'])) {
+            if (!in_array(config('ladocumenter.routes'), $route->action['middleware'])) {
                 return false;
             }
 
@@ -66,7 +67,7 @@ class LaDocumenter implements Contract
             $laDocumenterRoute = new LaDocumenterRoute();
             $laDocumenterRoute->uri = $uri;
             $laDocumenterRoute->httpMethod = $route->methods[0];
-            $laDocumenterRoute->requiresAuth = count(array_intersect(config('documentation.auth_middleware'), (array)$route->middleware())) > 0;
+            $laDocumenterRoute->requiresAuth = count(array_intersect(config('ladocumenter.auth_middleware'), (array)$route->middleware())) > 0;
             $laDocumenterRoute->class = $uses[0];
             $laDocumenterRoute->classMethod = $uses[1];
 
@@ -86,19 +87,17 @@ class LaDocumenter implements Contract
     public function getMethodDocBlock(LaDocumenterRoute $documenterRoute): LaDocumenterRoute
     {
         $annotations = $this->reader->getMethodAnnotations($documenterRoute->class, $documenterRoute->classMethod);
-        $endpointAnnotations = collect($annotations->get(AnnotationType::ENDPOINT()));
-        $responseAnnotations = collect($annotations->get(AnnotationType::RESPONSE()));
-        $bodyAnnotations = collect($annotations->get(AnnotationType::BODY_PARAM()));
-        $queryAnnotations = collect($annotations->get(AnnotationType::QUERY_PARAM()));
+        $endpointAnnotations = collect($annotations->get(AnnotationType::ENDPOINT));
+        $responseAnnotations = collect($annotations->get(AnnotationType::RESPONSE));
+        $bodyAnnotations = collect($annotations->get(AnnotationType::BODY_PARAM));
+        $queryAnnotations = collect($annotations->get(AnnotationType::QUERY_PARAM));
 
-        if ($endpointAnnotations->isNotEmpty()) {
-            $endpointAnnotation = $endpointAnnotations->first();
-            $documenterRoute->endpoint = $this->extractor->endpoint($endpointAnnotation);
-        } else {
-            $endpoint = new Endpoint();
-            $endpoint->name = Str::ucfirst($documenterRoute->classMethod);
-            $documenterRoute->endpoint = $endpoint;
+        if ($endpointAnnotations->isEmpty()) {
+            throw new LaDocumenterException('Missing an endpoint annotation');
         }
+
+        $endpointAnnotation = $endpointAnnotations->first();
+        $documenterRoute->endpoint = $this->extractor->endpoint($endpointAnnotation);
 
 
 
@@ -112,13 +111,13 @@ class LaDocumenter implements Contract
         if ($bodyAnnotations->isNotEmpty()) {
             $documenterRoute->bodyParams = $bodyAnnotations->map(function ($bodyAnnotation){
                 return $this->extractor->body($bodyAnnotation);
-            });
+            })->toArray();
         }
 
         if ($queryAnnotations->isNotEmpty()) {
             $documenterRoute->queryParams = $queryAnnotations->map(function ($queryAnnotation){
                 return $this->extractor->query($queryAnnotation);
-            });
+            })->toArray();
         }
 
 
@@ -134,11 +133,11 @@ class LaDocumenter implements Contract
      */
     public function getClassDocBlocks($class): Group
     {
-        $groupAnnotation = collect($this->reader->getClassAnnotations($class)->get(AnnotationType::GROUP()));
+        $groupAnnotation = collect($this->reader->getClassAnnotations($class)->get(AnnotationType::GROUP));
 
         if ($groupAnnotation->isEmpty()) {
             $group = new Group();
-            $group->name = $class;
+            $group->name = str_replace( '\\', '-', $class);
             return $group;
         }
 
@@ -161,7 +160,7 @@ class LaDocumenter implements Contract
             $reflectionClass = new \ReflectionClass($key);
 
             $item->group = $this->getClassDocBlocks($key);
-            $namespace = str_replace(config('documentation.controller_path'), '', $reflectionClass->getNamespaceName());
+            $namespace = Str::replaceFirst(config('ladocumenter.controller_path'), '', $reflectionClass->getNamespaceName());
 
             if (empty($namespace)) {
                 // Set namespace to Root if is default controller namespace.

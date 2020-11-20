@@ -40,7 +40,7 @@ class Extractor implements Contract
 
         ResponseExample::validate($responses);
 
-        $responseExample->file = file_get_contents($responseExample->file);
+        $responseExample->file = file_get_contents(storage_path($responseExample->file));
 
         return $responseExample;
     }
