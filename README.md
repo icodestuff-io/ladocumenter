@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="/logo.png" alt="logo">
+    <img src="https://github.com/icodestuff-io/ladocumenter/raw/master/logo.png" alt="logo">
 </p>
 
 <p align="center">
