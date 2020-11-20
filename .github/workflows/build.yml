@@ -1,4 +1,4 @@
-name: LaDocumenter CI
+name: LaDocumenter
 on: [push, pull_request]
 jobs:
   test:
