@@ -24,7 +24,7 @@
 |:-|:-|:-|
 |`{{$route->httpMethod}}`|`{{$route->uri}}`|`{{($route->requiresAuth) ? 'true': 'false'}}`|
 
-@if(!is_null($route->queryParams))
+@if(!empty($route->queryParams))
 ### Query Params
 |Name|Type|Status|Description|
 |:-|:-|:-|:-|
@@ -38,7 +38,7 @@
 
 @endif
 
-@if(!is_null($route->bodyParams))
+@if(!empty($route->bodyParams))
 ### Body Params
 |Name|Type|Status|Description|
 |:-|:-|:-|:-|

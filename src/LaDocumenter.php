@@ -161,6 +161,8 @@ class LaDocumenter implements Contract
 
             $item->group = $this->getClassDocBlocks($key);
             $namespace = Str::replaceFirst(config('ladocumenter.controller_path'), '', $reflectionClass->getNamespaceName());
+            // Remove slashes
+            $namespace = Str::replaceFirst('\\', '', $namespace);
 
             if (empty($namespace)) {
                 // Set namespace to Root if is default controller namespace.
