@@ -32,8 +32,18 @@ Then publish the config
 
 `php artisan vendor:publish --provider="Icodestuff\LaDocumenter\LaDocumenterServiceProvider"`
 
+## Demo Video
+Here is a YouTube video showcasing the LaDocumenter package
+
+[![Demo](https://i9.ytimg.com/vi/foBefSD3nQA/mqdefault.jpg?time=1606307700000&sqp=CPSe-f0F&rs=AOn4CLDafGGrjPJ1gyG3JghT5_kgaCj1LA)](https://youtu.be/foBefSD3nQA)
+
 ## Getting Started
 The only endpoints that are documented are the ones in your api.php file. 
+
+### Generating Documentation
+In order to compile your annotations to markdown you will need to run:
+
+`php artisan ladocumenter:generate`
 
 ### Grouping Endpoints
 All endpoints are grouped for easy organization. Only use `@Group` to group endpoints in a single controller class by adding 
