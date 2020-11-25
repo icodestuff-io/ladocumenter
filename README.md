@@ -35,7 +35,7 @@ Then publish the config
 ## Demo Video
 Here is a YouTube video showcasing the LaDocumenter package
 
-[![Demo](https://i9.ytimg.com/vi/foBefSD3nQA/mqdefault.jpg?time=1606307700000&sqp=CPSe-f0F&rs=AOn4CLDafGGrjPJ1gyG3JghT5_kgaCj1LA)](https://youtu.be/foBefSD3nQA)
+[![Demo](http://i3.ytimg.com/vi/foBefSD3nQA/maxresdefault.jpg)](https://youtu.be/foBefSD3nQA)
 
 ## Getting Started
 The only endpoints that are documented are the ones in your api.php file. 
