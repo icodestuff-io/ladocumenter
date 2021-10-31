@@ -18,6 +18,7 @@
   },
   "require": {
     "php": "^7.4",
+    "binarytorch/larecipe": "^2.4",
     "minime/annotations": "dev-master",
     "myclabs/php-enum": "^1.7"
   },
